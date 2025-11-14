@@ -1,0 +1,45 @@
+# Ultralytics YOLO 🚀, AGPL-3.0 license
+# YOLOv8 object detection model with P3-P5 outputs. For Usage examples see https://docs.ultralytics.com/tasks/detect
+
+# Parameters
+nc: 17  # number of classes
+scales: # model compound scaling constants
+  n: [0.33, 0.25, 1024]  # YOLOv8n summary: 225 layers,  3157200 parameters,  3157184 gradients,   8.9 GFLOPs
+
+# YOLOv8.0n backbone
+backbone:
+  # [from, repeats, module, args]
+  - [-1, 1, Conv, [64, 3, 2]]  # 0-P1/2
+  - [-1, 1, Conv, [128, 3, 2]]  # 1-P2/4
+  - [-1, 3, C2f, [128, True]]   # 2
+  - [-1, 1, Conv, [256, 3, 2]]  # 3-P3/8
+  - [-1, 6, C2f, [256, True]]   # 4
+  - [-1, 1, Conv, [512, 3, 2]]  # 5-P4/16
+  - [-1, 6, C2f, [512, True]]   # 6
+  - [-1, 1, Conv, [1024, 3, 2]] # 7-P5/32
+  - [-1, 3, C2f, [1024, True]]  # 8
+  - [-1, 1, SPPF, [1024, 5]]    # 9
+
+head:
+  # P5/32 path
+  - [-1, 1, UFEA, [1024]]       # 10
+  - [-1, 1, nn.Upsample, [None, 2, 'nearest']]  # 11
+  - [[-1, 6], 1, Concat, [1]]   # 12 cat backbone P4 (修正来源层)
+  - [-1, 3, C2f, [512]]         # 13
+  - [-1, 1, UFEA, [512]]        # 14
+  # P4/16 path
+  - [-1, 1, nn.Upsample, [None, 2, 'nearest']]  # 15
+  - [[-1, 4], 1, Concat, [1]]   # 16 cat backbone P3 (修正来源层)
+  - [-1, 3, C2f, [256]]         # 17
+  - [-1, 1, UFEA, [256]]        # 18
+  # P3/8 path
+  - [-1, 1, Conv, [256, 3, 2]]  # 19
+  - [[-1, 13], 1, Concat, [1]]  # 20 cat head P4
+  - [-1, 3, C2f, [512]]         # 21
+  - [-1, 1, UFEA, [512]]        # 22
+  # P4/16 path
+  - [-1, 1, Conv, [512, 3, 2]]  # 23
+  - [[-1, 10], 1, Concat, [1]]  # 24 cat head P5 (修正来源层)
+  - [-1, 3, C2f, [1024]]        # 25
+  # Detect层修正索引
+  - [[17, 21, 25], 1, Detect, [nc]]  # Detect(P3, P4, P5)

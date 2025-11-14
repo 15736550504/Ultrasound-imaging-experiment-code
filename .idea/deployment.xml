@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" autoUpload="Always" serverName="link@10.10.142.145:22 password">
+    <serverData>
+      <paths name="link@10.10.142.145:22">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/link/Yang/LHL/超声/腹部" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="link@10.10.142.145:22 password">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/link/Yang/LHL/超声/腹部" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="root@10.10.142.14:22">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="root@10.10.142.248:22">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="root@10.10.142.70:22">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/root/zou/fubu" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myAutoUpload" value="ALWAYS" />
+  </component>
+</project>
